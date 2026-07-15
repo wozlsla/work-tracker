@@ -15,7 +15,7 @@ class GitError(RuntimeError):
     pass
 
 
-def resolve_period(since: str | None, until: str | None, days: int) -> tuple[str, str]:
+def resolve_period(since: str | None, until: str | None, days: int | None) -> tuple[str, str]:
     now = datetime.now(UTC)
     if until:
         end = _parse_date(until, end_of_day=True)
@@ -23,8 +23,10 @@ def resolve_period(since: str | None, until: str | None, days: int) -> tuple[str
         end = now
     if since:
         start = _parse_date(since, end_of_day=False)
-    else:
+    elif days is not None:
         start = end - timedelta(days=max(days, 1))
+    else:
+        start = datetime(1970, 1, 1, tzinfo=UTC)
     if start > end:
         raise ValueError("--since는 --until보다 늦을 수 없습니다.")
     return start.isoformat(), end.isoformat()
@@ -38,7 +40,7 @@ def collect_git_activity(
     area_rules,
     limits: ScanLimits,
     include_working_tree: bool,
-    max_commits: int = 120,
+    max_commits: int | None = None,
 ) -> tuple[list[CommitRecord], list[str]]:
     warnings: list[str] = []
     try:
@@ -50,7 +52,6 @@ def collect_git_activity(
 
     args = [
         "log",
-        f"--max-count={max_commits}",
         f"--since={since}",
         f"--until={until}",
         "--date=iso-strict",
@@ -58,6 +59,8 @@ def collect_git_activity(
         "--format=%x1e%H%x1f%h%x1f%aI%x1f%an%x1f%ae%x1f%P%x1f%D%x1f%s",
         "--no-renames",
     ]
+    if max_commits is not None:
+        args.insert(1, f"--max-count={max_commits}")
     try:
         activity = _parse_log(_run_git(root, args, limits, limits.git_output_bytes), area_rules)
     except GitError as exc:

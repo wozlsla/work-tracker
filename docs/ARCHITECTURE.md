@@ -43,3 +43,5 @@ git_tracker.py ──────────┘                      │
 `v1.0.0` is the cleaned WorkTracker baseline: one package name, one CLI name, no generated output in version control, and no legacy compatibility modules or commands.
 
 `v1.1.0` separates report generation from the dashboard templates and assets, adds a keyboard command palette, and hardens the architecture workbench interaction contract.
+
+`v1.1.1` makes initial-commit-to-HEAD history the default scan scope; `--days`, `--since`, and `--max-commits` are now explicit opt-in limits.

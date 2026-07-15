@@ -64,11 +64,11 @@ def _add_scan_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--name", "-n", help="프로젝트 하나를 지정했을 때 표시 이름")
     parser.add_argument("--config-dir", default="examples", help="repos/team/ownership 설정 폴더. 기본값 examples")
     parser.add_argument("--output-dir", "-o", default="output", help="출력 루트. 기본값 output")
-    parser.add_argument("--days", type=int, default=14, help="--since 미지정 시 Git 활동 기간. 기본값 14일")
+    parser.add_argument("--days", type=int, help="최근 N일의 Git 활동만 분석합니다. 기본값은 initial commit부터 전체 이력")
     parser.add_argument("--since", help="Git 활동 시작 시각 또는 날짜")
     parser.add_argument("--until", help="Git 활동 종료 시각 또는 날짜")
     parser.add_argument("--include-working-tree", action=argparse.BooleanOptionalAction, default=True, help="커밋되지 않은 변경 포함")
-    parser.add_argument("--max-commits", type=int, default=120, help="프로젝트별 최대 커밋 수")
+    parser.add_argument("--max-commits", type=int, help="프로젝트별 최대 커밋 수. 기본값은 제한 없음")
     parser.add_argument("--max-files", type=int, default=100_000, help="프로젝트별 최대 추적 파일 수")
     parser.add_argument("--quiet", action="store_true", help="진행 로그 최소화")
     parser.add_argument(
@@ -194,8 +194,8 @@ def _prepare_scan(args: argparse.Namespace):
     slugs = [project_slug(repo.name) for repo in repositories]
     if len(slugs) != len(set(slugs)):
         raise ValueError("프로젝트 이름을 안전한 경로로 변환한 결과가 중복됩니다. 서로 다른 이름을 지정하세요.")
-    if args.days < 1 or args.max_commits < 1 or args.max_files < 100:
-        raise ValueError("--days/--max-commits는 양수이고 --max-files는 100 이상이어야 합니다.")
+    if (args.days is not None and args.days < 1) or (args.max_commits is not None and args.max_commits < 1) or args.max_files < 100:
+        raise ValueError("--days/--max-commits는 지정할 경우 양수이고 --max-files는 100 이상이어야 합니다.")
     since, until = resolve_period(args.since, args.until, args.days)
     limits = ScanLimits(max_files=args.max_files)
     return repositories, context, output_root, limits, since, until
@@ -219,7 +219,9 @@ def _scan_all(repositories, context, output_root, limits, since, until, args):
         )
         inventory.warnings.extend(item for item in git_warnings if item not in inventory.warnings)
         previous = load_previous_state(project_output / "state.json")
-        report = build_report(repo.name, root, project_output, since, until, inventory, commits, context, previous)
+        committed_dates = [item.date for item in commits if not item.working_tree]
+        report_since = min(committed_dates) if args.since is None and args.days is None and committed_dates else since
+        report = build_report(repo.name, root, project_output, report_since, until, inventory, commits, context, previous)
         if args.backfill_existing_reviews:
             filled = backfill_existing_reviews(report.commits)
             if filled and not args.quiet:

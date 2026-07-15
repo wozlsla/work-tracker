@@ -1,4 +1,4 @@
-# WorkTracker 1.0
+# WorkTracker 1.1
 
 WorkTracker는 코드 구조, Git 활동, 변경 스냅샷과 위험 신호를 하나의 근거 모델로 연결하는 로컬 프로젝트 인텔리전스 도구입니다. 스캔 결과의 정본은 `report.json`이며, 대시보드·Markdown·CSV·Mermaid는 같은 데이터에서 생성됩니다.
 
@@ -24,6 +24,8 @@ python -m work_tracker scan --project WarZ=C:\UnrealPrj\WarZ
 python -m work_tracker serve
 ```
 
+`scan`은 기본적으로 현재 브랜치의 initial commit부터 전체 커밋 이력을 수집합니다. 최근 구간만 필요할 때 `--days 14`, 명시적인 기간이 필요할 때 `--since`/`--until`, 성능을 위해 개수를 제한할 때 `--max-commits`를 추가합니다.
+
 커밋별 AI 분석을 사용하려면 루트의 `.env`에 키를 입력합니다. 서버는 버튼을 누를 때마다 이 파일을 다시 읽으므로 키를 추가한 뒤 재시작할 필요가 없습니다.
 
 ```dotenv
@@ -39,7 +41,7 @@ OPENAI_REASONING_EFFORT=medium
 기존 설정을 사용해 여러 프로젝트를 분석하려면:
 
 ```powershell
-python -m work_tracker scan --config-dir examples --days 14
+python -m work_tracker scan --config-dir examples
 ```
 
 작업 중 자동 갱신:

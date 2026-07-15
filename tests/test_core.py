@@ -7,8 +7,9 @@ from pathlib import Path
 
 from work_tracker import __version__
 from work_tracker.analyzer import analyze_risks, build_report, compare_files
-from work_tracker.cli import _git_metadata_signature
+from work_tracker.cli import _git_metadata_signature, build_parser
 from work_tracker.config import parse_yaml
+from work_tracker.git_tracker import resolve_period
 from work_tracker.local_review import backfill_existing_reviews, build_local_review
 from work_tracker.models import (
     CommitRecord,
@@ -28,6 +29,13 @@ class PackageTests(unittest.TestCase):
     def test_runtime_and_package_versions_match(self) -> None:
         project = tomllib.loads((Path(__file__).parents[1] / "pyproject.toml").read_text(encoding="utf-8"))
         self.assertEqual(__version__, project["project"]["version"])
+
+    def test_scan_defaults_to_full_git_history(self) -> None:
+        args = build_parser().parse_args(["scan", "--project", "."])
+        self.assertIsNone(args.days)
+        self.assertIsNone(args.max_commits)
+        since, _ = resolve_period(None, None, args.days)
+        self.assertTrue(since.startswith("1970-01-01T00:00:00"))
 
 
 class ConfigTests(unittest.TestCase):

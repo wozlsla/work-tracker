@@ -1,0 +1,16 @@
+milestone:
+  name: "Defense System MVP"
+  start: "2026-06-10"
+  end: "2026-06-17"
+
+goals:
+  - id: "defense-placement"
+    title: "Deployable placement system"
+    owner: "Unreal"
+  - id: "defense-api"
+    title: "Defense item spec API"
+    owner: "Backend"
+  - id: "ai-recommendation"
+    title: "AI recommendation output"
+    owner: "AI"
+

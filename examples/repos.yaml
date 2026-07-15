@@ -1,0 +1,5 @@
+repos:
+  - name: "WarZ"
+    path: "../../WarZ"
+  - name: "MH_NS"
+    path: "../../MH_NS"

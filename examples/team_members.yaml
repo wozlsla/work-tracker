@@ -1,0 +1,13 @@
+members:
+  - name: "Colloderm"
+    role: "TA"
+    git_author: "colloderm"
+  - name: "Jimin"
+    role: "Unreal"
+    git_author: ["jimin", "jiminseo0307"]
+  - name: "Backend"
+    role: "Backend"
+    git_author: "backend"
+  - name: "AI"
+    role: "AI"
+    git_author: "ai"

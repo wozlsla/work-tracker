@@ -1,0 +1,32 @@
+{
+  "repos": [
+    {
+      "name": "WarZ",
+      "areas": [
+        {
+          "owner": "Jimin",
+          "label": "Player/설치물",
+          "owner_aliases": ["jimin", "jiminseo0307"],
+          "paths": [
+            "Source/WarZ/Private/Character/Player/",
+            "Source/WarZ/Public/Character/Player/",
+            "Source/WarZ/Private/Interaction/",
+            "Source/WarZ/Public/Interaction/",
+            "Content/_WarZ/Interact/"
+          ]
+        },
+        {
+          "owner": "JH",
+          "label": "Enemy",
+          "owner_aliases": ["JH", "colloderm"],
+          "paths": [
+            "Source/WarZ/Private/Character/Enemy/",
+            "Source/WarZ/Public/Character/Enemy/",
+            "Content/_WarZ/Character/Enemy/"
+          ]
+        }
+      ]
+    }
+  ]
+}
+

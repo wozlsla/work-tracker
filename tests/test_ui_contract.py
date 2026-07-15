@@ -119,6 +119,9 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("overscroll-behavior:contain", self.html)
         self.assertIn('id="architectureResizer"', self.html)
         self.assertIn('role="separator"', self.html)
+        self.assertIn('aria-controls="inspector"', self.html)
+        self.assertIn("Home:range.min,End:range.max", self.html)
+        self.assertIn("aria-valuetext", self.html)
         self.assertIn("workTrackerInspectorWidth", self.html)
 
     def test_architecture_uses_the_live_panel_bounds(self) -> None:
@@ -132,7 +135,9 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("const WORLD_LIMIT=1000000", self.html)
         self.assertIn("item.x=worldCoordinate(origin.x+dx)", self.html)
         self.assertIn("saved?worldCoordinate(saved.x,initialX)", self.html)
+        self.assertIn("node.x=worldCoordinate(node.x);node.y=worldCoordinate(node.y)", self.html)
         self.assertNotIn("item.x=Math.max(minX,Math.min(maxX,origin.x+dx))", self.html)
+        self.assertNotIn("node.x=Math.max(55,Math.min(graphRuntime.width-55,node.x))", self.html)
 
     def test_architecture_uses_right_drag_camera_without_canvas_scrollbars(self) -> None:
         self.assertIn("function initCanvasNavigation", self.html)
@@ -184,6 +189,18 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("svgNode('svg',{class:'commit-chevron'", self.html)
         self.assertIn("setView(['overview','activity','architecture','changes','risks','files'].includes(requested)?requested:'overview',false)", self.html)
         self.assertIn("review.source!==current.source", self.html)
+        self.assertIn("toggle.setAttribute('aria-controls',panelId)", self.html)
+
+    def test_dashboard_has_keyboard_command_palette(self) -> None:
+        self.assertIn('id="commandPalette"', self.html)
+        self.assertIn('id="commandSearch"', self.html)
+        self.assertIn('data-command="view:architecture"', self.html)
+        self.assertIn('data-command="appearance"', self.html)
+        self.assertIn("function initCommandPalette", self.html)
+        self.assertIn("event.key.toLocaleLowerCase()==='k'", self.html)
+        self.assertIn("event.key==='ArrowDown'", self.html)
+        self.assertIn("role=\"listbox\"", self.html)
+        self.assertIn(':focus-visible{outline:2px solid var(--mint)', self.html)
 
     def test_sidebar_uses_outline_icons_and_changes_explains_snapshots(self) -> None:
         self.assertIn('class="nav-icon" aria-hidden="true"><svg', self.html)

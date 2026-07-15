@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" data-theme="dark" data-base="slate" data-accent="blue" data-font="system" data-style="standard">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>__TITLE__</title>
+  <style>
+__DASHBOARD_CSS__
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="주 탐색">
+      <div class="nav-label">Workspace</div>
+      <nav class="nav">
+        <button type="button" data-view="overview" aria-current="page" title="Overview"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>Overview</button>
+        <button type="button" data-view="activity" title="Activity"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></span>Activity</button>
+        <button type="button" data-view="architecture" title="Architecture"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="2"/><rect width="6" height="6" x="3" y="16" rx="2"/><rect width="6" height="6" x="15" y="16" rx="2"/><path d="M12 8v4m0 0H6v4m6-4h6v4"/></svg></span>Architecture</button>
+        <button type="button" data-view="changes" title="Snapshots"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m18 8 4 4-4 4M6 16l-4-4 4-4M2 12h20"/></svg></span>Snapshots</button>
+        <button type="button" data-view="risks" title="Risks"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></svg></span>Risks</button>
+        <button type="button" data-view="files" title="Files"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span>Files</button>
+      </nav>
+      <div class="sidebar-footer"><a href="summary.md">요약 Markdown ↗</a><a href="report.json">원본 JSON ↗</a><a href="architecture.mmd">Mermaid 그래프 ↗</a></div>
+    </aside>
+    <main class="main" id="main">
+      <header class="topbar"><div class="topbar-start"><button class="icon-button sidebar-toggle" id="sidebarToggle" type="button" aria-label="사이드바 접기" aria-expanded="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m4-6 3-3-3-3"/></svg></button><a class="project-home" href="../../index.html" aria-label="전체 프로젝트로 돌아가기">Projects</a><span class="topbar-divider" aria-hidden="true"></span><div class="project-title"><div class="eyebrow">Project workspace</div><h1 id="projectName">Project</h1><p id="projectMeta"></p></div></div><div class="top-actions"><button class="command-button" id="commandToggle" type="button" aria-haspopup="dialog" aria-expanded="false"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>빠른 이동</span><kbd>Ctrl K</kbd></button><a class="button" href="report.json"><span>데이터</span> ↓</a><button class="icon-button" id="copyPath" type="button" aria-label="프로젝트 경로 복사"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button><button class="icon-button" id="themeSettingsToggle" type="button" aria-label="테마 및 글꼴 설정" aria-haspopup="dialog" aria-expanded="false">Aa</button></div></header>
+      <div class="command-backdrop" id="commandPalette" hidden>
+        <section class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+          <header class="command-head"><div><span class="panel-label">Command palette</span><h2 id="commandTitle">빠른 이동</h2></div><button class="icon-button" id="commandClose" type="button" aria-label="빠른 이동 닫기">×</button></header>
+          <label class="command-search"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="commandSearch" type="search" autocomplete="off" placeholder="화면 또는 명령 검색" aria-label="화면 또는 명령 검색"></label>
+          <div class="command-list" id="commandList" role="listbox" aria-label="사용 가능한 명령">
+            <button type="button" role="option" data-command="view:overview"><span>Overview</span><small>프로젝트 피드와 최신 상태</small></button>
+            <button type="button" role="option" data-command="view:activity"><span>Activity</span><small>커밋과 AI 구현 분석</small></button>
+            <button type="button" role="option" data-command="view:architecture"><span>Architecture</span><small>관계 그래프와 시스템 맵</small></button>
+            <button type="button" role="option" data-command="view:changes"><span>Snapshots</span><small>스캔 사이 파일 변화</small></button>
+            <button type="button" role="option" data-command="view:risks"><span>Risks</span><small>자동 탐지 위험 신호</small></button>
+            <button type="button" role="option" data-command="view:files"><span>Files</span><small>추적 파일 탐색</small></button>
+            <button type="button" role="option" data-command="appearance"><span>Appearance</span><small>테마, 색상과 글꼴 설정</small></button>
+            <button type="button" role="option" data-command="sidebar"><span>Sidebar toggle</span><small>사이드바 펼치기 또는 접기</small></button>
+          </div>
+          <footer class="command-footer"><span>↑↓ 이동</span><span>Enter 실행</span><span>Esc 닫기</span></footer>
+        </section>
+      </div>
+      <aside class="theme-settings" id="themeSettings" role="dialog" aria-label="화면 스타일 설정" hidden>
+        <div class="theme-settings-head"><div><h2>Appearance</h2><p>모드, 표면 색, 강조색과 글꼴을 조합합니다.</p></div><button class="theme-close" id="themeSettingsClose" type="button" aria-label="테마 설정 닫기">×</button></div>
+        <section class="theme-section"><span class="theme-section-title">Theme mode</span><div class="theme-segmented" role="group" aria-label="테마 모드"><button type="button" data-theme-mode="system" aria-pressed="true">시스템</button><button type="button" data-theme-mode="light" aria-pressed="false">라이트</button><button type="button" data-theme-mode="dark" aria-pressed="false">다크</button></div></section>
+        <section class="theme-section"><span class="theme-section-title">Surface style</span><div class="theme-segmented theme-style-segmented" role="group" aria-label="표면 스타일"><button type="button" data-theme-style="standard" aria-pressed="true">Standard</button><button type="button" data-theme-style="material" aria-pressed="false">Material 3</button></div><p class="theme-hint">Material 3는 둥근 형태, tonal surface와 낮은 elevation을 적용합니다.</p></section>
+        <section class="theme-section"><span class="theme-section-title">Base surface · Tailwind + Material Theme</span><div class="theme-choice-grid"><button class="theme-choice" type="button" data-theme-base="slate" aria-pressed="true"><span class="theme-swatch"></span>Slate</button><button class="theme-choice" type="button" data-theme-base="gray" aria-pressed="false"><span class="theme-swatch"></span>Gray</button><button class="theme-choice" type="button" data-theme-base="zinc" aria-pressed="false"><span class="theme-swatch"></span>Zinc</button><button class="theme-choice" type="button" data-theme-base="neutral" aria-pressed="false"><span class="theme-swatch"></span>Neutral</button><button class="theme-choice" type="button" data-theme-base="stone" aria-pressed="false"><span class="theme-swatch"></span>Stone</button><button class="theme-choice" type="button" data-theme-base="material-ocean" aria-pressed="false"><span class="theme-swatch"></span>Ocean</button><button class="theme-choice" type="button" data-theme-base="material-palenight" aria-pressed="false"><span class="theme-swatch"></span>Palenight</button></div><p class="theme-hint">Ocean과 Palenight는 VS Code Material Theme의 대표 색상 계열입니다.</p></section>
+        <section class="theme-section"><span class="theme-section-title">Accent color</span><div class="theme-choice-grid"><button class="theme-choice" type="button" data-theme-accent="blue" aria-pressed="true"><span class="theme-swatch"></span>Blue</button><button class="theme-choice" type="button" data-theme-accent="teal" aria-pressed="false"><span class="theme-swatch"></span>Teal</button><button class="theme-choice" type="button" data-theme-accent="emerald" aria-pressed="false"><span class="theme-swatch"></span>Emerald</button><button class="theme-choice" type="button" data-theme-accent="violet" aria-pressed="false"><span class="theme-swatch"></span>Violet</button><button class="theme-choice" type="button" data-theme-accent="amber" aria-pressed="false"><span class="theme-swatch"></span>Amber</button><button class="theme-choice" type="button" data-theme-accent="rose" aria-pressed="false"><span class="theme-swatch"></span>Rose</button><button class="theme-choice" type="button" data-theme-accent="material" aria-pressed="false"><span class="theme-swatch"></span>Material</button></div></section>
+        <section class="theme-section"><span class="theme-section-title">Interface font</span><div class="theme-choice-grid"><button class="theme-choice font-choice" type="button" data-theme-font="system" aria-pressed="true">System</button><button class="theme-choice font-choice" type="button" data-theme-font="inter" aria-pressed="false">Inter</button><button class="theme-choice font-choice" type="button" data-theme-font="pretendard" aria-pressed="false">Pretendard</button><button class="theme-choice font-choice" type="button" data-theme-font="mono" aria-pressed="false">Mono</button></div></section>
+        <div class="theme-footer"><span id="themeStatus">시스템 · Slate · Blue · System</span><button class="button" id="themeReset" type="button">기본값 복원</button></div>
+      </aside>
+      <div class="content">
+        <section class="view" id="view-overview" data-view-panel="overview">
+          <div class="overview-toolbar"><div><h2>Project feed</h2><p id="overviewMeta">최신 분석 결과와 프로젝트 활동을 시간순으로 확인합니다.</p></div><div class="scan-state"><span class="status-dot info"></span><span id="latestScanState">Latest scan ready</span></div></div>
+          <div class="overview-layout">
+            <section><div class="feed-heading"><h3>Latest updates</h3><span id="feedCount"></span></div><div class="project-feed" id="projectFeed"></div></section>
+            <aside class="overview-rail">
+              <section class="rail-section"><div class="rail-head"><h3>Project snapshot</h3></div><div class="snapshot-grid" id="metricGrid"></div></section>
+              <section class="rail-section"><div class="rail-head"><h3>Domains</h3><button class="rail-link" type="button" data-go="architecture">Architecture →</button></div><div class="domain-list" id="domainGrid"></div></section>
+              <section class="rail-section"><div class="rail-head"><h3>Contributors</h3><button class="rail-link" type="button" data-go="activity">Activity →</button></div><div class="bars" id="teamBars"></div></section>
+            </aside>
+          </div>
+        </section>
+        <section class="view" id="view-activity" data-view-panel="activity" hidden><div class="section-heading"><h2>Activity</h2><p>커밋을 선택한 뒤 amend까지 마쳤을 때 OpenAI 분석을 실행합니다. 분석 전에는 코드가 외부로 전송되지 않습니다.</p></div><div class="toolbar"><label class="field"><input id="activitySearch" type="search" placeholder="커밋, 작성자, 파일, 분석 내용 검색" aria-label="활동 검색"></label><label class="field"><select id="memberFilter" aria-label="팀원 필터"><option value="">모든 팀원</option></select></label><label class="field"><select id="domainFilter" aria-label="도메인 필터"><option value="">모든 도메인</option></select></label></div><div class="commit-list" id="commitList"></div></section>
+        <section class="view" id="view-architecture" data-view-panel="architecture" hidden>
+          <div class="section-heading"><h2>Architecture</h2><p>관계 그래프에서 노드를 직접 배치하거나, 시스템 맵에서 전체 책임 구조를 한눈에 확인합니다.</p></div>
+          <div class="architecture-controls">
+            <div class="view-switch" role="group" aria-label="아키텍처 뷰 선택">
+              <button type="button" data-architecture-mode="relations" aria-pressed="true">⌘ 관계 그래프</button>
+              <button type="button" data-architecture-mode="map" aria-pressed="false">▦ 시스템 맵</button>
+            </div>
+            <div class="toolbar"><label class="field"><input id="graphSearch" type="search" placeholder="클래스 검색" aria-label="아키텍처 검색"></label><label class="field"><select id="graphDomain" aria-label="아키텍처 도메인 필터"><option value="">모든 도메인</option></select></label></div>
+          </div>
+          <div class="architecture-layout" id="architectureLayout">
+            <div class="architecture-stage" id="architectureStage">
+              <div class="architecture-canvas" id="relationCanvas">
+                <div class="graph-shell" id="relationShell"><div class="graph-optionbar" role="toolbar" aria-label="관계 그래프 명령"><label class="graph-setting"><span>연결선</span><select id="graphEdgeWeight" aria-label="관계 연결선 굵기"><option value="0.7">얇게</option><option value="1">보통</option><option value="1.8">굵게</option><option value="3">매우 굵게</option></select></label><button class="align-toggle" type="button" id="graphAlignToggle" aria-haspopup="menu" aria-expanded="false">정렬 ▾</button><button class="align-toggle annotation-toggle" type="button" id="annotationAdd" aria-pressed="false">주석 추가</button></div><div class="graph-tools" role="toolbar" aria-label="관계 그래프 확대와 초기화"><button type="button" id="graphZoomIn" aria-label="확대">＋</button><button type="button" id="graphZoomOut" aria-label="축소">−</button><button type="button" id="graphReset" aria-label="사용자 배치 초기화" title="사용자 배치 초기화">⌂</button></div><div class="selection-help">휠: 확대/축소 · 우클릭 드래그: 캔버스 이동 · 빈 공간 드래그: 다중 선택 · 짧은 우클릭: 정렬</div><svg id="architectureGraph" viewBox="0 0 1100 640" role="img" aria-label="마우스 휠 확대 축소, 우클릭 드래그 이동, 영역 주석을 지원하는 프로젝트 아키텍처 관계 그래프"></svg><div class="graph-context-menu" id="graphAlignMenu" role="menu" hidden><button type="button" data-align="left">왼쪽 맞춤</button><button type="button" data-align="right">오른쪽 맞춤</button><button type="button" data-align="center-x">가로 중앙</button><button type="button" data-align="center-y">세로 중앙</button><button type="button" data-align="top">위쪽 맞춤</button><button type="button" data-align="bottom">아래쪽 맞춤</button><button type="button" data-align="distribute-x">가로 간격</button><button type="button" data-align="distribute-y">세로 간격</button></div><div class="graph-status" id="graphStatus"></div></div>
+              </div>
+              <div class="architecture-canvas" id="mapCanvas" hidden>
+                <div class="graph-shell system-map-shell" id="mapShell"><div class="graph-tools" role="toolbar" aria-label="시스템 맵 확대와 초기화"><button type="button" id="mapZoomIn" aria-label="시스템 맵 확대">＋</button><button type="button" id="mapZoomOut" aria-label="시스템 맵 축소">−</button><button type="button" id="mapZoomReset" aria-label="시스템 맵 확대 초기화">⌂</button></div><svg id="systemMap" viewBox="0 0 1100 640" role="img" aria-label="마우스 휠 확대 축소와 우클릭 드래그 이동을 지원하는 프로젝트, 도메인, 클래스 계층 시스템 맵"></svg><div class="graph-status" id="mapStatus"></div></div>
+              </div>
+            </div>
+            <div class="architecture-resizer" id="architectureResizer" role="separator" aria-label="그래프와 속성 패널 너비 조절" aria-controls="inspector" aria-orientation="vertical" aria-valuemin="260" aria-valuemax="640" aria-valuenow="330" aria-valuetext="330픽셀" tabindex="0"></div>
+            <aside class="inspector" id="inspector"><div class="inspector-empty"><div><strong>노드를 선택하세요</strong><p>책임, 구성 요소, 연결 관계를 확인할 수 있습니다.</p></div></div></aside>
+          </div>
+          <section class="annotation-panel" id="annotationPanel" aria-labelledby="annotationPanelTitle"><div class="annotation-panel-head"><div><h3 id="annotationPanelTitle">Canvas annotations</h3><p>관계 그래프에서 영역을 만든 뒤 제목, 분류와 상세 내용을 기록합니다. Ctrl+Z: 되돌리기 · Delete: 삭제 · Esc: 취소</p></div><span class="panel-label">프로젝트별 자동 저장</span></div><div class="annotation-workspace" id="annotationWorkspace"></div></section>
+        </section>
+        <section class="view" id="view-changes" data-view-panel="changes" hidden><div class="section-heading"><h2>Snapshots</h2><p>Git 커밋과 별개로 직전 스캔과 현재 작업 디렉터리를 비교합니다. 미추적·생성 파일까지 놓치지 않기 위한 안전망입니다.</p></div><div class="snapshot-purpose"><strong>Activity와의 차이</strong><span>Activity는 커밋 이력과 구현 분석을, Snapshots는 두 스캔 사이 파일의 추가·수정·삭제 여부를 보여줍니다.</span></div><div class="toolbar"><label class="field"><input id="changeSearch" type="search" placeholder="스냅샷 변경 파일 검색" aria-label="스냅샷 변경 파일 검색"></label><label class="field"><select id="changeStatus" aria-label="변경 상태 필터"><option value="">모든 상태</option><option value="added">추가</option><option value="modified">수정</option><option value="deleted">삭제</option></select></label></div><div id="changeTable"></div></section>
+        <section class="view" id="view-risks" data-view-panel="risks" hidden><div class="section-heading"><h2>Risks</h2><p>근거와 후속 행동을 함께 제공하는 자동 탐지 신호입니다.</p></div><div class="risk-list" id="riskList"></div></section>
+        <section class="view" id="view-files" data-view-panel="files" hidden><div class="section-heading"><h2>Files</h2><p>추적 대상의 종류, 영역, 도메인, 모듈과 크기를 탐색합니다.</p></div><div class="toolbar"><label class="field"><input id="fileSearch" type="search" placeholder="경로, 종류, 모듈 검색" aria-label="파일 검색"></label><label class="field"><select id="fileKind" aria-label="파일 종류 필터"><option value="">모든 종류</option></select></label></div><div id="fileTable"></div><button class="button load-more" id="fileMore" type="button">더 보기</button></section>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="application/json" id="report-data">__REPORT_JSON__</script>
+  <script>
+__DASHBOARD_JS__
+  </script>
+</body></html>

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 
+from work_tracker import __version__
 from work_tracker.analyzer import analyze_risks, build_report, compare_files
 from work_tracker.cli import _git_metadata_signature
 from work_tracker.config import parse_yaml
@@ -20,6 +22,12 @@ from work_tracker.reporter import render_dashboard
 from work_tracker.scanner import ScanInventory, scan_project
 from work_tracker.semantic_diff import analyze_patch
 from work_tracker.server import _is_loopback_host
+
+
+class PackageTests(unittest.TestCase):
+    def test_runtime_and_package_versions_match(self) -> None:
+        project = tomllib.loads((Path(__file__).parents[1] / "pyproject.toml").read_text(encoding="utf-8"))
+        self.assertEqual(__version__, project["project"]["version"])
 
 
 class ConfigTests(unittest.TestCase):

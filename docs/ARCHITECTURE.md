@@ -23,7 +23,8 @@ git_tracker.py ──────────┘                      │
 - `local_review.py`: one-time offline review backfill for an existing baseline.
 - `openai_review.py`: manual, server-side OpenAI Responses API analysis for a selected commit.
 - `analyzer.py`: snapshot comparison, ownership checks, risks, and the report model.
-- `reporter.py`: standalone report artifacts with escaped embedded JSON.
+- `reporter.py`: report data shaping, escaped embedded JSON, and artifact orchestration.
+- `templates/` and `assets/`: reviewable HTML/CSS/JavaScript sources inlined into standalone output at render time.
 - `server.py`: loopback-first static artifact server and the manual review endpoint.
 - `cli.py`: scan, watch, serve, and self-test orchestration.
 
@@ -40,3 +41,5 @@ git_tracker.py ──────────┘                      │
 ## Versioning
 
 `v1.0.0` is the cleaned WorkTracker baseline: one package name, one CLI name, no generated output in version control, and no legacy compatibility modules or commands.
+
+`v1.1.0` separates report generation from the dashboard templates and assets, adds a keyboard command palette, and hardens the architecture workbench interaction contract.

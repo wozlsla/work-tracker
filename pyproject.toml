@@ -1,6 +1,6 @@
 [project]
 name = "work-tracker"
-version = "1.0.0"
+version = "1.1.0"
 description = "Local-first project intelligence: architecture, Git activity, change tracking, risks, and dashboards."
 requires-python = ">=3.11"
 readme = "README.md"
@@ -8,6 +8,9 @@ license = { text = "Proprietary" }
 
 [project.scripts]
 work-tracker = "work_tracker.cli:main"
+
+[tool.setuptools.package-data]
+work_tracker = ["assets/*.css", "assets/*.js", "templates/*.html"]
 
 [tool.pyright]
 pythonVersion = "3.11"

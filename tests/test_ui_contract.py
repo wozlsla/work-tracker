@@ -205,6 +205,34 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("activityPage=1;renderActivity()", self.html)
         self.assertIn(".activity-pagination", self.html)
 
+    def test_activity_triages_merges_flags_and_archives_locally(self) -> None:
+        self.assertIn('data-activity-tab="main"', self.html)
+        self.assertIn('data-activity-tab="important"', self.html)
+        self.assertIn('data-activity-tab="archive"', self.html)
+        self.assertIn('id="activityMainCount"', self.html)
+        self.assertIn('id="activityImportantCount"', self.html)
+        self.assertIn('id="activityArchiveCount"', self.html)
+        self.assertIn("activityStateStorageKey", self.html)
+        self.assertIn("item.parents.length>1", self.html)
+        self.assertIn("isMergeCommit(item)", self.html)
+        self.assertIn("activityArchivedIds", self.html)
+        self.assertIn("activityVisibleMergeIds", self.html)
+        self.assertIn("activityImportantIds", self.html)
+        self.assertIn("commit-action-important", self.html)
+        self.assertIn("commit-action-archive", self.html)
+        self.assertIn("flag-shape", self.html)
+        self.assertIn("Merge · 자동 보관", self.html)
+        self.assertIn("ArrowLeft:(index-1+tabs.length)%tabs.length", self.html)
+        self.assertIn("tabs[next].focus()", self.html)
+        self.assertNotIn("commit-action-heart", self.html)
+        self.assertNotIn("commit-action-bookmark", self.html)
+
+    def test_windows_launcher_runs_the_local_server(self) -> None:
+        launcher = (Path(__file__).parents[1] / "start.cmd").read_text(encoding="utf-8")
+        self.assertIn("-m work_tracker serve", launcher)
+        self.assertIn("CODEX_PYTHON", launcher)
+        self.assertIn("Python 3.11", launcher)
+
     def test_dashboard_uses_workbench_information_hierarchy(self) -> None:
         self.assertIn("Workspace pulse", self.html)
         self.assertIn("Activity timeline", self.html)

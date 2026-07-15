@@ -45,3 +45,5 @@ git_tracker.py ──────────┘                      │
 `v1.1.0` separates report generation from the dashboard templates and assets, adds a keyboard command palette, and hardens the architecture workbench interaction contract.
 
 `v1.1.1` makes initial-commit-to-HEAD history the default scan scope; `--days`, `--since`, and `--max-commits` are now explicit opt-in limits.
+
+`v1.2.0` turns the dashboard into a flatter workbench, paginates commit intelligence in 15-item slices, and restores reliable relationship-node persistence by capturing drag input at the SVG canvas boundary.

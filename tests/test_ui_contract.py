@@ -136,6 +136,10 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("item.x=worldCoordinate(origin.x+dx)", self.html)
         self.assertIn("saved?worldCoordinate(saved.x,initialX)", self.html)
         self.assertIn("node.x=worldCoordinate(node.x);node.y=worldCoordinate(node.y)", self.html)
+        self.assertIn("svg.setPointerCapture(event.pointerId)", self.html)
+        self.assertIn("svg.addEventListener('pointermove'", self.html)
+        self.assertIn("svg.releasePointerCapture(event.pointerId)", self.html)
+        self.assertNotIn("nodeGroup.setPointerCapture(event.pointerId)", self.html)
         self.assertNotIn("item.x=Math.max(minX,Math.min(maxX,origin.x+dx))", self.html)
         self.assertNotIn("node.x=Math.max(55,Math.min(graphRuntime.width-55,node.x))", self.html)
 
@@ -190,6 +194,25 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("setView(['overview','activity','architecture','changes','risks','files'].includes(requested)?requested:'overview',false)", self.html)
         self.assertIn("review.source!==current.source", self.html)
         self.assertIn("toggle.setAttribute('aria-controls',panelId)", self.html)
+
+    def test_activity_is_paginated_without_losing_filters(self) -> None:
+        self.assertIn('id="activityPrev"', self.html)
+        self.assertIn('id="activityNext"', self.html)
+        self.assertIn('id="activityPageStatus"', self.html)
+        self.assertIn("ACTIVITY_PAGE_SIZE=15", self.html)
+        self.assertIn("items.slice((activityPage-1)*ACTIVITY_PAGE_SIZE", self.html)
+        self.assertIn("function resetActivityPage()", self.html)
+        self.assertIn("activityPage=1;renderActivity()", self.html)
+        self.assertIn(".activity-pagination", self.html)
+
+    def test_dashboard_uses_workbench_information_hierarchy(self) -> None:
+        self.assertIn("Workspace pulse", self.html)
+        self.assertIn("Activity timeline", self.html)
+        self.assertIn("Commit intelligence", self.html)
+        self.assertIn("System model", self.html)
+        self.assertIn("v1.2 workbench", self.html)
+        self.assertIn(".feed-item:not(:last-child):after", self.html)
+        self.assertNotIn("gradient(", self.html)
 
     def test_dashboard_has_keyboard_command_palette(self) -> None:
         self.assertIn('id="commandPalette"', self.html)

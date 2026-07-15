@@ -80,6 +80,8 @@ class DashboardContractTests(unittest.TestCase):
 
     def test_dashboard_has_composable_theme_system(self) -> None:
         self.assertIn('id="themeSettings"', self.html)
+        self.assertIn('id="themePreset"', self.html)
+        self.assertIn('data-preset="custom"', self.html)
         self.assertIn('data-theme-mode="system"', self.html)
         self.assertIn('data-style="standard"', self.html)
         self.assertIn('data-theme-style="material"', self.html)
@@ -96,7 +98,26 @@ class DashboardContractTests(unittest.TestCase):
         self.assertIn("workTrackerThemeAccent", self.html)
         self.assertIn("workTrackerFont", self.html)
         self.assertIn("workTrackerThemeStyle", self.html)
+        self.assertIn("workTrackerThemePreset", self.html)
         self.assertIn('html[data-style="material"]', self.html)
+
+    def test_dashboard_has_complete_theme_preset_library(self) -> None:
+        presets = (
+            "material-theme", "material-theme-hc", "material-theme-darker-hc",
+            "material-theme-palenight", "material-theme-palenight-hc",
+            "material-theme-ocean", "material-theme-ocean-hc",
+            "material-theme-lighter", "material-theme-lighter-hc",
+            "material-theme-darker", "absolutely", "github", "material", "nord",
+            "tokyo-night", "vscode-plus",
+        )
+        for preset in presets:
+            self.assertIn(f'<option value="{preset}">', self.html)
+        for color in ("#cc7d5e", "#0d1117", "#80cbc4", "#2e3440", "#1a1b26", "#007acc"):
+            self.assertIn(color, self.html.lower())
+        self.assertIn("THEME_PRESETS", self.html)
+        self.assertIn("THEME_PRESET_VARIABLES", self.html)
+        self.assertIn("root.dataset.preset=themePreset", self.html)
+        self.assertIn("root.style.removeProperty", self.html)
 
     def test_native_select_options_follow_active_theme(self) -> None:
         self.assertIn('html[data-theme="dark"] select{color-scheme:dark}', self.html)

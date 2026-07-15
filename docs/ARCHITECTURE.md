@@ -49,3 +49,5 @@ git_tracker.py ──────────┘                      │
 `v1.2.0` turns the dashboard into a flatter workbench, paginates commit intelligence in 15-item slices, and restores reliable relationship-node persistence by capturing drag input at the SVG canvas boundary.
 
 `v1.3.0` adds local-first Activity triage: merge commits are archived by default, users can archive or restore any commit, important flags persist per project, and `start.cmd` launches the server without requiring an installed console-script entry point.
+
+`v1.4.0` adds a persistent preset layer above the composable appearance system: ten Material Theme variants and six popular palettes map to the same semantic CSS variables without duplicating component styles.

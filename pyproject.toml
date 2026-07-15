@@ -1,6 +1,6 @@
 [project]
 name = "work-tracker"
-version = "1.3.0"
+version = "1.4.0"
 description = "Local-first project intelligence: architecture, Git activity, change tracking, risks, and dashboards."
 requires-python = ">=3.11"
 readme = "README.md"
